@@ -1,0 +1,94 @@
+{
+    "step-types":
+    {
+        "script-module-step":
+        [
+            {
+                "@type-id":"custom.SiteAlertsStepType",
+                "module":"bm_extension_test/cartridge/scripts/job/alerts.ds",
+                "function":"execute",
+                "@supports-site-context":"true",
+                "@supports-organization-context":"false",
+                "transactional":"true",
+                "timeout-in-seconds":"15",
+                "description":"Test: evaluate custom alerts.",
+                "status-codes":
+                {
+                    "status":
+                    [
+                        {
+                            "@code": "ERROR",
+                            "description": "Used when the step failed with an error."
+                        },
+                        {
+                            "@code": "FINISHED",
+                            "description": "Used when the step finished successfully."
+                        },
+                        {
+                            "@code": "FINISHED_WITH_WARNINGS",
+                            "description": "Used when the step finished with warnings."
+                        }
+                    ]
+                }
+            }
+            ,
+            {
+                "@type-id":"custom.OrgAlertsStepType",
+                "module":"bm_extension_test/cartridge/scripts/job/alerts.ds",
+                "function":"executeGlobal",
+                "@supports-site-context":"false",
+                "@supports-organization-context":"true",
+                "transactional":"true",
+                "timeout-in-seconds":"15",
+                "description":"Test: evaluate custom alerts.",
+                "status-codes":
+                {
+                    "status":
+                    [
+                        {
+                            "@code": "ERROR",
+                            "description": "Used when the step failed with an error."
+                        },
+                        {
+                            "@code": "FINISHED",
+                            "description": "Used when the step finished successfully."
+                        },
+                        {
+                            "@code": "FINISHED_WITH_WARNINGS",
+                            "description": "Used when the step finished with warnings."
+                        }
+                    ]
+                }
+            },
+
+            {
+                "@type-id":"custom.CheckProductPricing",
+                "module":"bm_extension_test/cartridge/scripts/analyzeProductForPricing.js",
+                "function":"validateProducts",
+                "@supports-site-context":"true",
+                "@supports-organization-context":"false",
+                "transactional":"true",
+                "timeout-in-seconds":"15",
+                "description":"Test: evaluate custom alerts.",
+                "status-codes":
+                {
+                    "status":
+                    [
+                        {
+                            "@code": "ERROR",
+                            "description": "Used when the step failed with an error."
+                        },
+                        {
+                            "@code": "FINISHED",
+                            "description": "Used when the step finished successfully."
+                        },
+                        {
+                            "@code": "FINISHED_WITH_WARNINGS",
+                            "description": "Used when the step finished with warnings."
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

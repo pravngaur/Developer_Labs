@@ -1,0 +1,113 @@
+var system = require( 'dw/system' );
+var campaign = require( 'dw/campaign' ); 
+var customer = require( 'dw/customer' ); 
+importPackage( dw.alert );
+
+var logger = system.Logger.getLogger( "Alerts.execute" );
+
+/*
+  Validation function: check that promotions are enabled
+*/ 
+function checkPromoEnabled(promotion)
+{
+   	return !promotion.isEnabled();
+}
+
+/*
+  Validation function: check for promotions that are expired (for more than 90 days)
+*/ 
+function checkPromoInPast(promotion)
+{
+   	var validTo=promotion.getEndDate();
+   	if (null==validTo)
+   	{
+   		return false;
+   	}
+   	var now = Date.now();
+   	return (now - validTo)>(1000*60*60*24*90); // older than 90 days
+}
+
+/*
+  Validation function: check that customer lists has a description
+*/ 
+function checkCustomerListHasDescription(list)
+{
+  var description = list.getDescription();
+  return description == null || description == '';
+}
+
+/*
+  Job executor: run site-specific validations
+*/
+function doExecute( parameters )
+{
+    // validate all promotions assigned to the site
+   	var promotions = campaign.PromotionMgr.getPromotions();
+   	for each(var promo in promotions)
+   	{
+   		Alerts.revalidateAlert('promo_disabled', promo, checkPromoEnabled, [promo.getID(),""]);
+   		Alerts.revalidateAlert('promo_in_past', promo, checkPromoInPast, [promo.getID(),""]);
+   	}
+
+   	// check for misconfigured customer lists
+   	// adds to the existing alerts the customer lists site
+   	var list = customer.CustomerMgr.getSiteCustomerList();
+   	if (null != list)
+   	{
+   		Alerts.revalidateAlert('missing_cl_description', list, list.getID(), checkCustomerListHasDescription, [list.getID(),""]);
+   	}
+}
+
+/*
+  Validation function: check that sites are live
+*/ 
+function validateSiteIsLive(site)
+{
+	return site.getStatus()!=dw.system.Site.SITE_STATUS_ONLINE;
+}
+
+/*
+  Validation function: verify global custom preferences
+*/ 
+function validateSetupFinished()
+{
+	var orgPrefs : OrganizationPreferences = dw.system.System.getPreferences();
+	var custom = orgPrefs.getCustom();
+	if (custom.hasOwnProperty("SetupFinished"))
+	{
+		return false;
+	}
+    return true;
+}
+
+/*
+  Job executor: run org-wide validations
+*/
+function doExecuteGlobal( parameters )
+{
+    // directly create / remove alerts
+   	Alerts.addAlert('custom_02', null);
+   	Alerts.removeAlert('custom_01');
+
+    // check all existing sites
+   	var sites = system.Site.getAllSites();
+   	for each(var site in sites)
+   	{
+	   	Alerts.revalidateAlert('site_is_live', site, site.getID(), validateSiteIsLive, [site.getID(),""]);
+   	}
+	Alerts.revalidateAlert('missing_org_config', validateSetupFinished, null);
+}
+
+exports.execute = function( parameters )
+{
+    doExecute( parameters );
+    
+    return new system.Status(system.Status.OK);
+}
+
+exports.executeGlobal = function( parameters )
+{
+    doExecuteGlobal( parameters );
+    
+    return new system.Status(system.Status.OK);
+}
