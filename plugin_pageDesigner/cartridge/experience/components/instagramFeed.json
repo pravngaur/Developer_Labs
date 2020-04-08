@@ -1,0 +1,29 @@
+{
+    "name": "Instagram Post Component",
+    "description": "Component to embed instagram posts",
+    "group": "commerce_assets",
+    "attribute_definition_groups": [
+        {
+            "id": "instagramComponentAttributes",
+            "name": "Instagram Component Configurations",
+            "description": "This component will host a instagram post.",
+            "attribute_definitions": [
+                {
+                    "id": "postURL",
+                    "name": "Post URL",
+                    "description": "URL of the insta post",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "id": "sharedByURL",
+                    "name": "shared By URL",
+                    "description": "Shared by URL property",
+                    "type": "string",
+                    "required": true
+                }
+            ]
+        }
+    ],
+    "region_definitions": []
+}

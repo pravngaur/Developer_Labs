@@ -1,0 +1,22 @@
+{
+    "name": "Cached Text Component",
+    "description": "2 Caching test component",
+    "group": "commerce_assets",
+    "attribute_definition_groups": [
+        {
+            "id": "cachingTestDuplicate",
+            "name": "2 Caching test component",
+            "description": "The message to be displayed on the Header Promo Banner.",
+            "attribute_definitions": [
+                {
+                    "id": "textToShow",
+                    "name": "Text to appear",
+                    "description": "Message to be displayed on the banner.",
+                    "type": "string",
+                    "required": true
+                }
+            ]
+        }
+    ],
+    "region_definitions": []
+}

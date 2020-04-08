@@ -1,0 +1,22 @@
+{
+    "name": "Youtube Viewer Banner",
+    "description": "Banner playing youtube videos",
+    "group": "commerce_assets",
+    "attribute_definition_groups": [
+        {
+            "id": "youtubeComponentAttributes",
+            "name": "Youtube Viewer Configurations",
+            "description": "This component will host a youtube video.",
+            "attribute_definitions": [
+                {
+                    "id": "youtubeID",
+                    "name": "ID of youtube video",
+                    "description": "Provide the ID of Youtube video",
+                    "type": "string",
+                    "required": true
+                }
+            ]
+        }
+    ],
+    "region_definitions": []
+}

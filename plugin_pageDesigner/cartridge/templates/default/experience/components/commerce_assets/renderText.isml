@@ -1,0 +1,10 @@
+<div class="mainbanner-container">
+
+    <div class="row">
+        <div class="mainbanner-figure image-component">
+            <div class="col-12">
+                  ++++++${pdict.textToShow}
+            </div>
+        </div>
+    </div>
+</div>
